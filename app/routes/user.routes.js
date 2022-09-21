@@ -1,25 +1,17 @@
-module.exports = app => {
-    const users = require("../controllers/user.controller");
-  
-    let router = require("express").Router();
-  
-    // Create a new User
-    router.post("/register", users.create);
+//*********************** GET public & protected resources *************/
+// verifies auth token 
+const { authJwt } = require("../middleware");
+// other routes that can be accessed once user is authenticated
+const controller = require("../controllers/user.controller");
+let router = require("express").Router();
 
-    // Login
-    router.post("/signin", users.signin);
-  
-    // Retrieve all users
-    router.get("/", users.findAll);
-  
-    // Retrieve a single User with id
-    router.get("/:id", users.findOne);
-  
-    // Update a User with id
-    router.put("/:id", users.update);
-  
+module.exports = app => {
+    // Retrieve all users without auth
+    router.get("/all", controller.findAll);
+    // Retrieve all users but auth is required
+    router.get("/getAll",[authJwt.verifyToken], controller.findOne);
     // Delete a User with id
     router.delete("/:id", users.delete);
-  
-    app.use('/api/users', router);
+    router.get('/admin',[authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
+    app.use('/api/test', router)
 };
