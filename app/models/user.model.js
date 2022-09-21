@@ -5,10 +5,12 @@ module.exports = (sequelize , DataType) => {
             // Model attributes are defined here
             name:{
                 type: DataType.STRING,
+                unique: true,
                 allowNull: false
             },
             email:{
                 type: DataType.STRING,
+                unique: true,
                 allowNull: false
             },
             password:{

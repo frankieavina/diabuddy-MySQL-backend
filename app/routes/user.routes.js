@@ -4,7 +4,10 @@ module.exports = app => {
     let router = require("express").Router();
   
     // Create a new User
-    router.post("/", users.create);
+    router.post("/register", users.create);
+
+    // Login
+    router.post("/signin", users.signin);
   
     // Retrieve all users
     router.get("/", users.findAll);
