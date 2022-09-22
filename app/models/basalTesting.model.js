@@ -1,22 +1,20 @@
 module.exports = (sequelize, DataType) => {
     const BasalTesting = sequelize.define("basal testing", {
-            user_name: {
-            type: DataType.STRING
-            },
-            user_id: {
-            type: DataType.INTEGER
-            },
             time: {
-            type: DataType.DATETIME,
-            defaultValue: DataType.NOW
+                type: DataType.DATE,
+                defaultValue: DataType.NOW
             },
             glucose: {
-            type: DataType.INTEGER
+                type: DataType.INTEGER
             },
             completed: {
-            type: DataType.BOOLEAN,
-            defaultValue: false
+                type: DataType.BOOLEAN,
+                defaultValue: false
             }
+        },{
+            timestamps: false,
+            tableName: 'basal_testing'
         });
-    return Property;
-    };
+
+    return BasalTesting;
+};

@@ -2,7 +2,7 @@ module.exports = (sequelize , DataType) => {
     const User = sequelize.define(
         'User',
         {
-            // Model attributes are defined here
+            // dont need to specify user id but you can if you want
             name:{
                 type: DataType.STRING,
                 unique: true,
@@ -17,9 +17,11 @@ module.exports = (sequelize , DataType) => {
                 type: DataType.STRING,
                 allowNull: false
             }
+        },{
+            timestamps: false,
+            tableName: 'user'
         });
-    // Post.associate = ({ Category }) => {
-    //     Post.belongsTo(Category);
-    // };
+
+
     return User;
 };

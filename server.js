@@ -15,10 +15,9 @@ app.use(bodyParser.json());
 // database roles
 const Role = db.role;
 
-db.sequelize.sync({force: true})
+db.sequelize.sync()
   .then(() => { 
     console.log("Synced to MySQL DB from Railway.");
-    initial();
   })
   .catch((err) => { console.log('Failed to sync to db:'+ err.message)} );
 
@@ -41,17 +40,17 @@ app.listen(port, () => {
 
 // delete on uncomment this and {force: true} after first run
 // or manually add table in mySql
-function initial() {
-  Role.create({
-    id: 1,
-    name: "user"
-  });
-  Role.create({
-    id: 2,
-    name: "admin"
-  });
-  Role.create({
-    id: 3,
-    name: "doctor"
-  })
-}
+// function initial() {
+//   Role.create({
+//     id: 1,
+//     name: "user"
+//   });
+//   Role.create({
+//     id: 2,
+//     name: "admin"
+//   });
+//   Role.create({
+//     id: 3,
+//     name: "doctor"
+//   })
+// }

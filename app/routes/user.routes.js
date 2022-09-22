@@ -11,7 +11,7 @@ module.exports = app => {
     // Retrieve all users but auth is required
     router.get("/getAll",[authJwt.verifyToken], controller.findOne);
     // Delete a User with id
-    router.delete("/:id", users.delete);
+    router.delete("/:id", controller.delete);
     router.get('/admin',[authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
     app.use('/api/test', router)
 };

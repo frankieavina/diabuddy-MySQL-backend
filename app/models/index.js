@@ -24,32 +24,27 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.sequelize = sequelize;
+// db.sequelize = sequelize;
 
 // models for users roles and basalTesting
 db.users = require('./user.model')(sequelize,DataTypes);
-db.role = require('../models/role.model')(sequelize,DataTypes);
-db.basalTesting = require('../models/basalTesting.model')(sequelize,DataTypes);
+db.role = require('./role.model')(sequelize,DataTypes);
+db.basalTesting = require('./basalTesting.model')(sequelize,DataTypes);
 
 // Associations between users and roles
 // MANY-TO-MANY RELATIONSHIP
-db.role.belongsToMany(db.user, {
-  through: "user_roles",
-  foreignKey: "roleId",
-  otherKey: "userId"
-});
-db.users.belongsToMany(db.role, {
-  through: "user_roles",
-  foreignKey: "userId",
-  otherKey: "roleId"
-});
+// db.role.belongsToMany(db.user, {
+//   through: "user_roles",
+//   foreignKey: "roleId",
+//   otherKey: "userId"
+// });
+// db.users.hasOne(db.role);
 
-// Associations between user and basalTesting
+// Associations between user and role
+// sequalize will create a foreign key for users called role_id
+// that will connect/associate users to role
 // ONE-TO-ONE RELATIONSHIP
-// you can add {foreignKey: namedesired} and change the value 
-// of basalTestingId
-db.users.hasOne(db.basalTesting);
-db.basalTesting.belongsTo(db.users);
+db.users.hasOne(role);
 
 
 db.ROLES = ["user","admin","doctor"]
