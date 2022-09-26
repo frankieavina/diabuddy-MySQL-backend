@@ -7,7 +7,7 @@ let router = require("express").Router();
 
 // AUTHENTICATION 
 module.exports = (app) => {
-    router.post("/api/auth/signup",[verifySignUp.checkDupNameEmail],controller.signup);
-    router.post("/api/auth/signin", controller.signin);
+    router.post("/signup",[verifySignUp.checkDupNameEmail],controller.signup);
+    router.post("/signin", controller.signin);
     app.use('/api/auth', router)
 }

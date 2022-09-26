@@ -31,21 +31,13 @@ db.users = require('./user.model')(sequelize,DataTypes);
 db.role = require('./role.model')(sequelize,DataTypes);
 db.basalTesting = require('./basalTesting.model')(sequelize,DataTypes);
 
-// Associations between users and roles
-// MANY-TO-MANY RELATIONSHIP
-// db.role.belongsToMany(db.user, {
-//   through: "user_roles",
-//   foreignKey: "roleId",
-//   otherKey: "userId"
-// });
-// db.users.hasOne(db.role);
 
-// Associations between user and role
-// sequalize will create a foreign key for users called role_id
-// that will connect/associate users to role
-// ONE-TO-ONE RELATIONSHIP
-db.users.hasOne(role);
-
+// Associations between user and role - One to Many Associations
+// primary key from parent table(roles) may appear in foreign 
+// key column on child table (users) more than once
+// we will use a combination of hasMany() and belongsTo()
+db.role.hasMany(db.users);
+db.users.belongsTo(db.role);
 
 db.ROLES = ["user","admin","doctor"]
 

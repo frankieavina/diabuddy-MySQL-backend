@@ -4,6 +4,7 @@ const db = require("../models");
 const config = require('../config/auth.config');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { createJWT } = require('../config/auth.config');
 
 const User = db.users;
 const Role = db.role;
@@ -27,7 +28,7 @@ exports.signup = async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: hashedPass,
-      role: 1
+      roleId: 1
     };
   
     // creating jwt token
@@ -70,7 +71,7 @@ exports.signup = async (req, res) => {
   
       //compare password
       const userPassword = `${user.password}`;
-      const isAuthenticated = await bcrypt.compare(req.body.password, userPassword);
+      const isAuthenticated = await bcrypt.compare(password, userPassword);
   
       // if authenticated then create jwt and return user info
       if(isAuthenticated){

@@ -18,6 +18,7 @@ const Role = db.role;
 db.sequelize.sync()
   .then(() => { 
     console.log("Synced to MySQL DB from Railway.");
+    // initial();
   })
   .catch((err) => { console.log('Failed to sync to db:'+ err.message)} );
 
