@@ -1,15 +1,14 @@
 module.exports = (sequelize, DataType) => {
     const BasalTesting = sequelize.define("basal testing", {
-            time: {
-                type: DataType.DATE,
-                defaultValue: DataType.NOW
+            numberOfTest: {
+                type: DataType.STRING
             },
             glucose: {
                 type: DataType.INTEGER
             },
-            completed: {
-                type: DataType.BOOLEAN,
-                defaultValue: false
+            time: {
+                type: DataType.DATE,
+                defaultValue: DataType.NOW
             }
         },{
             timestamps: false,
