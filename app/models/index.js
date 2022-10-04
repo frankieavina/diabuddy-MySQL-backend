@@ -39,6 +39,10 @@ db.basalTesting = require('./basalTesting.model')(sequelize,DataTypes);
 db.role.hasMany(db.users);
 db.users.belongsTo(db.role);
 
+// each user has many basal test result. basal testing holds foreign key
+db.users.hasMany(db.basalTesting,{foreignKey:'userId',  as: 'tests'});
+db.basalTesting.belongsTo(db.users,{ foreignKey:'userId', as: 'user'});
+
 db.ROLES = ["user","admin","doctor"]
 
 module.exports = db;
