@@ -3,23 +3,10 @@ const mysql = require('mysql2/promise');
 
 require('dotenv').config();
 
-// const pool = mysql.createPool({
-//     host: process.env.DB_HOST,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASSWORD,
-//     database: process.env.DB_NAME,
-//     port: process.env.DB_PORT
-// })
-
-//initializing/connecting to database 
+//configuring DB you can also do this in the 
+// db.config.js file  
 const uri = process.env.DB_URL; 
 const sequelize = new Sequelize(uri);
-
-// const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-//   host: process.env.DB_HOST,
-//   port: process.env.DB_PORT,
-//   dialect: 'mysql'
-// });
 
 // testing connection to database
 const testConnect = async () =>{
@@ -35,9 +22,36 @@ testConnect();
 
 const db = {};
 
-db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
+// models for users roles and basalTesting
 db.users = require('./user.model')(sequelize,DataTypes);
+db.role = require('./role.model')(sequelize,DataTypes);
+db.basalTesting = require('./basalTesting.model')(sequelize,DataTypes);
+db.bolus = require('./bolus.model')(sequelize,DataTypes);
+db.reminders = require('./reminder.model')(sequelize,DataTypes);
+
+
+// Associations between user and role - One to Many Associations
+// primary key from parent table(roles) may appear in foreign 
+// key column on child table (users) more than once
+// we will use a combination of hasMany() and belongsTo()
+db.role.hasMany(db.users);
+db.users.belongsTo(db.role);
+
+// each user has many basal test result. basal testing holds foreign key
+db.users.hasMany(db.basalTesting,{foreignKey:'userId',  as: 'tests'});
+db.basalTesting.belongsTo(db.users,{ foreignKey:'userId', as: 'user'});
+
+// each user has many boluses and bolus table holds foreign key
+db.users.hasMany(db.bolus,{foreignKey:'userId',  as: 'bolus'});
+db.bolus.belongsTo(db.users,{ foreignKey:'userId', as: 'user'});
+
+// each user can have reminders 
+db.users.hasMany(db.reminders,{foreignKey:'userId',  as: 'reminders'});
+db.reminders.belongsTo(db.users,{ foreignKey:'userId', as: 'user'});
+
+db.ROLES = ["user","admin","doctor"]
 
 module.exports = db;
