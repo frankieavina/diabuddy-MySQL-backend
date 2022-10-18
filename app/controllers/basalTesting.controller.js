@@ -14,33 +14,33 @@ exports.addTest = (req, res) => {
         userId: userId
     })
         .then((data) => {
-        return res.send({
-            result: data,
-            success: true
-        })
+        return res.status(200).send({
+                result: data,
+                success: true
+            })
         })
         .catch((err) => {
         return res.status(500).send('Error white create basal test:',err);
         })
     
   };
-/////// get users test ///////////
+/////// get user's tests depending on userId ///////////
 exports.getTestById = (req, res) => {
     const {userId} = req.body;
 
     return User.findByPk(userId, {include: ['tests'] })
-    .then((data) =>{
-        return res.send({
-            result: data,
-            success: true
-        }) 
-    })
-    .catch((err) => {
-        return res.status(400).send('Invalid Add Test Route request:',err)
-    })
+        .then((data) =>{
+            return res.status(200).send({
+                result: data,
+                success: true
+            }) 
+        })
+        .catch((err) => {
+            return res.status(400).send('Invalid Add Test Route request:',err)
+        })
 
   };
-//////// delete users test ///////////
+//////// delete all of user's tests ///////////
 exports.deleteTest = (req, res) => {
     const {userId} = req.body;
 

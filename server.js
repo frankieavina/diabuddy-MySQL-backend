@@ -28,9 +28,11 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to frankie's application." });
 });
 // rest of routes
+require('./app/routes/auth.routes')(app);
 require('./app/routes/basalTesting.routes')(app);
 require('./app/routes/user.routes')(app);
-require('./app/routes/auth.routes')(app);
+require('./app/routes/bolus.routes')(app);
+require('./app/routes/reminder.routes')(app);
 //************************************************************************/
 
 // setting ports and listening for requests
