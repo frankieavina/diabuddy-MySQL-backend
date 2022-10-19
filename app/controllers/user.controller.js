@@ -5,7 +5,19 @@ const User = db.users;
 
 ///////////////////////// Retrieve all Users from the database. ////////////////////
 exports.findAll = (req, res) => {
-  res.status(200).send("Public Content.");
+  
+  return User.findAll()
+    .then((data) => {
+      return res.status(200).send({
+        result: data,
+        success: true
+    })
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: "Could retrieve users"
+    })
+  });
 };
 
 ///////////////////////////// Find a single Users with an id ///////////////////////
@@ -13,27 +25,22 @@ exports.findOne = (req, res) => {
   res.status(200).send("User Content.");
 };
 
-////////////////////// Delete a Users with the specified id in the request ////////
+////////////////////// Delete a Users with the specified id in the request if you are admin ////////
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const { userId } = req.body;
 
   User.destroy({
-    where: { id: id }
+    where: { id: userId }
   })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Tutorial was deleted successfully!"
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
-        });
-      }
+    .then((data) => {
+      res.status(200).send({
+        success: true,
+        result: data
+      });
     })
     .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Tutorial with id=" + id
+      res.status(400).send({
+        message: "Could not delete user with id=" + userId
       });
     });
 };

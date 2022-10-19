@@ -28,6 +28,8 @@ exports.addTest = (req, res) => {
 exports.getTestById = (req, res) => {
     const {userId} = req.body;
 
+    console.log(userId);
+
     return User.findByPk(userId, {include: ['tests'] })
         .then((data) =>{
             return res.status(200).send({
@@ -36,10 +38,25 @@ exports.getTestById = (req, res) => {
             }) 
         })
         .catch((err) => {
-            return res.status(400).send('Invalid Add Test Route request:',err)
+            return res.status(400).send('Invalid Add Basal Test Route request:',err)
         })
 
   };
+////////  edit user's tests ///////////
+exports.editTest = (req, res) => {
+    const {numTest , glucose, date, userId, id} = req.body;
+
+    return BasalTest.update({where:{id: id}})
+        .then((data) => {
+            return res.status(200).send({
+                result: data,
+                success: true
+            }) 
+        })
+        .catch((err) => {
+            return res.status(400).send('Invalid Edit Basal Test Route request:',err)
+        })
+}
 //////// delete all of user's tests ///////////
 exports.deleteTest = (req, res) => {
     const {userId} = req.body;

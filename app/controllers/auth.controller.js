@@ -37,14 +37,14 @@ exports.signup = async (req, res) => {
     // save user in the database
     User.create(user)
       .then(data => {
-          res.send({
+          res.status(200).send({
             success: true,
             result: data,
             token: access_token
           });
       })
       .catch(err => {
-          res.status(500).send({
+          res.status(400).send({
               message: err.message || "Some error occurred while creating the User."
           });
       });
@@ -77,7 +77,7 @@ exports.signup = async (req, res) => {
       if(isAuthenticated){
         // creating jwt token
         const access_token = createJWT(user.email, '1h');
-        res.json({
+        res.status(200).send({
             success: true,
             result: user,
             token: access_token
