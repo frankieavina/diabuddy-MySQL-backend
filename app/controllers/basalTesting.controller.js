@@ -59,9 +59,9 @@ exports.editTest = (req, res) => {
 }
 //////// delete all of user's tests ///////////
 exports.deleteTest = (req, res) => {
-    const {userId} = req.body;
+    const {testId} = req.body;
 
-    return BasalTest.destroy( {where:{ userId: userId}} )
+    return BasalTest.destroy( {where:{ id: testId}} )
         .then((data) =>{
             return res.status(200).send({
                 result: data,

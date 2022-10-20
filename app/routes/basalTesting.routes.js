@@ -8,7 +8,7 @@ module.exports = app => {
     //router.delete('/delete-test', [authJwt.verifyToken], controller.deleteTest);
     //router.post('/add-test',[authJwt.verifyToken],controller.addTest);
     router.post('/get-test', controller.getTestById);
-    router.delete('/delete-test', controller.deleteTest);
+    router.post('/delete-test', controller.deleteTest);
     router.post('/add-test',controller.addTest);
     app.use('/api/basal',router)
 }
