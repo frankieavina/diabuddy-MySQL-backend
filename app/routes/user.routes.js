@@ -6,12 +6,10 @@ const controller = require("../controllers/user.controller");
 let router = require("express").Router();
 
 module.exports = app => {
-    // Retrieve all users without auth
-    router.get("/all", controller.findAll);
     // Retrieve all users but auth is required
-    router.get("/getAll",[authJwt.verifyToken], controller.findOne);
+    router.get("/getAll",[authJwt.verifyToken], controller.findAll);
     // Delete a User with id
-    router.delete("/:id", controller.delete);
-    router.get('/admin',[authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
-    app.use('/api/test', router)
+    router.delete("/delete", controller.delete);
+    //router.get('/admin',[authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
+    app.use('/api/users', router)
 };

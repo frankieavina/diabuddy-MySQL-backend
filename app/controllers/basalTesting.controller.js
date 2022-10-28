@@ -20,13 +20,15 @@ exports.addTest = (req, res) => {
             })
         })
         .catch((err) => {
-        return res.status(500).send('Error white create basal test:',err);
+        return res.status(500).send('Error while create basal test:',err);
         })
     
   };
 /////// get user's tests depending on userId ///////////
 exports.getTestById = (req, res) => {
     const {userId} = req.body;
+
+    console.log(userId);
 
     return User.findByPk(userId, {include: ['tests'] })
         .then((data) =>{
@@ -36,15 +38,30 @@ exports.getTestById = (req, res) => {
             }) 
         })
         .catch((err) => {
-            return res.status(400).send('Invalid Add Test Route request:',err)
+            return res.status(400).send('Invalid Get Basal Test Route request:',err)
         })
 
   };
+////////  edit user's tests ///////////
+exports.editTest = (req, res) => {
+    const {numTest , glucose, date, userId, id} = req.body;
+
+    return BasalTest.update({where:{id: id}})
+        .then((data) => {
+            return res.status(200).send({
+                result: data,
+                success: true
+            }) 
+        })
+        .catch((err) => {
+            return res.status(400).send('Invalid Edit Basal Test Route request:',err)
+        })
+}
 //////// delete all of user's tests ///////////
 exports.deleteTest = (req, res) => {
-    const {userId} = req.body;
+    const {testId} = req.body;
 
-    return BasalTest.destroy( {where:{ userId: userId}} )
+    return BasalTest.destroy( {where:{ id: testId}} )
         .then((data) =>{
             return res.status(200).send({
                 result: data,
