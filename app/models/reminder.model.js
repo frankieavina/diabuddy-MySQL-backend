@@ -5,7 +5,6 @@ module.exports = (sequelize, DataType) => {
             },
             time: {
                 type: DataType.DATE,
-                defaultValue: DataType.NOW
             }
         },{
             timestamps: false,

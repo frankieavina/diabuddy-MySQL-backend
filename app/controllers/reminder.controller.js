@@ -6,9 +6,11 @@ const User = db.users;
 exports.addReminder = (req, res)=>{
     const {name, dateTime, userId} = req.body;
 
+    console.log('Date Time:', dateTime)
+
     return Reminder.create({
         name,
-        dateTime,
+        time: dateTime,
         userId
     })
         .then((data) => {

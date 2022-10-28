@@ -20,7 +20,7 @@ exports.addTest = (req, res) => {
             })
         })
         .catch((err) => {
-        return res.status(500).send('Error white create basal test:',err);
+        return res.status(500).send('Error while create basal test:',err);
         })
     
   };
@@ -38,7 +38,7 @@ exports.getTestById = (req, res) => {
             }) 
         })
         .catch((err) => {
-            return res.status(400).send('Invalid Add Basal Test Route request:',err)
+            return res.status(400).send('Invalid Get Basal Test Route request:',err)
         })
 
   };
