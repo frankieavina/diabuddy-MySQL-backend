@@ -11,5 +11,9 @@ module.exports = app => {
     // Delete a User with id
     router.delete("/delete", controller.delete);
     //router.get('/admin',[authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
+    router.get('/admin/getAll', controller.adminGetAll)
+    router.get('/admin/get/:id', controller.adminGet)
+    router.get('/admin/update', controller.adminUpdate)
+    router.get('/admin/delete/:id', controller.adminDelete)
     app.use('/api/users', router)
 };

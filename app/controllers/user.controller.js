@@ -45,7 +45,77 @@ exports.delete = (req, res) => {
     });
 };
 
-////////////////////////// Testing Admin Route /////////////////
-exports.adminBoard = (req, res) => {
-  res.status(200).send("Admin Content.");
+////////////////////////// Admin Routes /////////////////
+exports.adminGetAll = (req, res) => {
+  return User.findAll()
+    .then((data) => {
+      return res.status(200).send({
+        result: data,
+        success: true
+      })
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could retrieve users"
+      })
+    });
+};
+
+exports.adminGet = (req, res) => {
+  const userID = req.params.id;
+
+  return User.findByPk(userID)
+    .then((data) => {
+      return res.status(200).send({
+        result: data,
+        success: true
+      })
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could retrieve single user."
+      })
+    });
+};
+
+exports.adminUpdate = (req, res) => {
+  const {user, payload} = req.body;
+  const id = user;
+  const {name, email, roleId} = payload;
+
+  return User.update(
+      {
+        name,
+        email,
+        roleId
+      },
+      {
+        where:{id: id}
+      }
+    )
+    .then((data) => {
+      return res.status(200).send({
+        result: data,
+        success: true
+      })
+    })
+    .catch((err) =>{
+      return res.status(400).send('Invalid Delete Test Route request:',err)
+    })
+
+};
+
+exports.adminDelete = (req, res) => {
+  const userID = req.params.id;
+
+  return User.destroy({where:{id: userID}})
+    .then((data) =>{
+      return res.status(200).send({
+        result: data,
+        success: true
+      })
+    })
+    .catch((err) =>{
+      return res.status(400).send('Invalid Delete Test Route request:',err);
+    })
 };
