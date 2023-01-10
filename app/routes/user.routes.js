@@ -15,5 +15,6 @@ module.exports = app => {
     router.get('/admin/get/:id', controller.adminGet)
     router.get('/admin/update', controller.adminUpdate)
     router.get('/admin/delete/:id', controller.adminDelete)
+    router.get('/admin/getBasal/:id', controller.adminGetBasal)
     app.use('/api/users', router)
 };

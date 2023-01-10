@@ -119,3 +119,18 @@ exports.adminDelete = (req, res) => {
       return res.status(400).send('Invalid Delete Test Route request:',err);
     })
 };
+
+exports.adminGetBasal = (req, res) => {
+  const userID = req.params.id;
+
+  return User.findByPk(userID, {include: ['tests'] })
+    .then((data) =>{
+        return res.status(200).send({
+            result: data,
+            success: true
+        }) 
+    })
+    .catch((err) => {
+        return res.status(400).send('Invalid Get Basal Test Route request:',err)
+    })
+}
